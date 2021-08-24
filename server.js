@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(routes);
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://mmonyok:Zqgjhh@4a@hw.pnpcq.mongodb.net/fitnessTracker?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/fitnessTracker", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
