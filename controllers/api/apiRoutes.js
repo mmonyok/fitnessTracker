@@ -5,6 +5,7 @@ const db = require("../../models")
 // This route gets the data for the "last workout display."
 router.get("/workouts", async (req, res) => {
   try {
+    // Here we get all workouts and then sort from most recent and only take one.
     const data = await db.Workout.find({})
       .sort({ _id: -1 })
       .limit(1);
@@ -54,6 +55,22 @@ router.put("/workouts/:id", async ({ body, params }, res) => {
   }
 });
 
-// This route will get 
+// This route will get data for the past seven workouts.
+router.get("/workouts/range", async (req, res) => {
+  try {
+    // Here we get all workouts and sort by most recent, add a total duration field, and take the most recent 7.
+    const data = await db.Workout.aggregate([
+      { $sort: { _id: -1 } },
+      { $limit: 7 },
+      {
+        $addFields: { totalDuration: { $sum: "$exercises.duration" } }
+      }
+    ]);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
 
 module.exports = router;
