@@ -34,8 +34,9 @@ router.post("/workouts", async (req, res) => {
 // This route will pull the data from the last workout.
 router.put("/workouts/:id", async ({ body, params }, res) => {
   try {
+    // Here we select the correct document and add our exercise to it.
     const data = await db.Workout.updateOne({
-      "_id": params.id,
+      "_id": params.id
     }, {
       $addToSet: { "exercises": [body] }
     })
@@ -53,6 +54,7 @@ router.get("/workouts/range", async (req, res) => {
     const data = await db.Workout.aggregate([
       { $sort: { _id: -1 } },
       { $limit: 7 },
+      { $sort: { _id: 1 } },
       {
         $addFields: { totalDuration: { $sum: "$exercises.duration" } }
       }

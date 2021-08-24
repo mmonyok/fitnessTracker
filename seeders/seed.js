@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const db = require('../models');
 
-mongoose.connect('mongodb://localhost/workout', {
+mongoose.connect('mongodb://localhost/fitnessTracker', {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost/workout', {
 
 const workoutSeed = [
   {
-    day: new Date(new Date().setDate(new Date().getDate() - 9)),
+    day: new Date(new Date().setDate(new Date().getDate() - 8)),
     exercises: [
       {
         type: 'resistance',
